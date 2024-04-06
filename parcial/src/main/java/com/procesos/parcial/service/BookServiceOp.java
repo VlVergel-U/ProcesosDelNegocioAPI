@@ -2,7 +2,6 @@ package com.procesos.parcial.service;
 
 import com.procesos.parcial.model.Book;
 import com.procesos.parcial.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -10,8 +9,11 @@ import java.util.Optional;
 @Service
 public class BookServiceOp  implements  BookService{
 
-    @Autowired
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
+
+    public BookServiceOp(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     @Override
     public Book createBook(Book book) {
@@ -39,10 +41,7 @@ public class BookServiceOp  implements  BookService{
     @Override
     public Book getBookById(Long id) {
         Optional<Book> bookBD = bookRepository.findById(id);
-        if (bookBD.isEmpty()) {
-            return null;
-        }
-        return bookBD.get();
+        return bookBD.orElse(null);
     }
 
     @Override

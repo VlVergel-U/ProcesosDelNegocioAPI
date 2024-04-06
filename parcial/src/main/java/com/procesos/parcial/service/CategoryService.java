@@ -1,6 +1,6 @@
 package com.procesos.parcial.service;
+
 import com.procesos.parcial.model.Category;
-import com.procesos.parcial.model.enums.CategoryEnum;
 
 import java.util.List;
 

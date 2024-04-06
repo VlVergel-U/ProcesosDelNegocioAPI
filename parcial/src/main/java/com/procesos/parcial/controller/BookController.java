@@ -2,7 +2,6 @@ package com.procesos.parcial.controller;
 
 import com.procesos.parcial.model.Book;
 import com.procesos.parcial.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,11 +10,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/book")
 public class BookController {
-    @Autowired
 
-        private BookService bookService;
+    private final BookService bookService;
 
-        @PostMapping
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
+
+    @PostMapping
         public Book createBook(@RequestBody Book book) {
             return bookService.createBook(book);
         }

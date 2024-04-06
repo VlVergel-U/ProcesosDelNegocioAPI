@@ -2,7 +2,6 @@ package com.procesos.parcial.controller;
 
 import com.procesos.parcial.model.Category;
 import com.procesos.parcial.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,10 +10,13 @@ import java.util.List;
     @RequestMapping("/api/v1/category")
     public class CategoryController {
 
-        @Autowired
-        private CategoryService categoryService;
+        private final CategoryService categoryService;
 
-        @PostMapping
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
+    @PostMapping
         public Category createCategory(@RequestBody Category category) {
             return categoryService.createCategory(category);
         }
