@@ -1,6 +1,6 @@
 package com.procesos.parcial.model.enums;
 
-public enum Category {
+public enum CategoryEnum {
 
     Action, Adventure, Romance, Thrillers, Horror, Science_Fiction, Educational
 

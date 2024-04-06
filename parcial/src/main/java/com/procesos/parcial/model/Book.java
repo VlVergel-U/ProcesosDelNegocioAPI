@@ -1,6 +1,6 @@
 package com.procesos.parcial.model;
 
-import com.procesos.parcial.model.enums.Category;
+import com.procesos.parcial.model.enums.CategoryEnum;
 import com.procesos.parcial.model.enums.Language;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -22,7 +22,9 @@ public class Book {
     @ManyToOne
     private Autor autor;
 
+    @ManyToOne
     private Category category;
+
     private String editionNumber;
     private Double price;
     private LocalDate publicationDate;
