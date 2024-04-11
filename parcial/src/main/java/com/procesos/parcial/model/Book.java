@@ -1,5 +1,6 @@
 package com.procesos.parcial.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.procesos.parcial.model.enums.Language;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -11,6 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
+@Table(name = "book")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,19 +20,19 @@ public class Book {
     private String name;
     private String description;
 
-    @ManyToOne
+    @OneToOne(mappedBy = "book")
     private Autor autor;
 
-    @ManyToOne
+    @OneToOne(mappedBy = "book")
     private Category category;
 
     private String editionNumber;
     private Double price;
     private LocalDate publicationDate;
+    @OneToOne(mappedBy = "book")
+    private Editorial editorial;
 
-    @ManyToMany
-    private List<Editorial> editorials;
-
+    @Enumerated(EnumType.STRING)
     private Language language;
 
 

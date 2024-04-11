@@ -36,7 +36,6 @@ public class BookServiceOp implements BookService {
         existingBook.setEditionNumber(bookUpdated.getEditionNumber());
         existingBook.setDescription(bookUpdated.getDescription());
         existingBook.setPublicationDate(bookUpdated.getPublicationDate());
-        existingBook.setEditorials(bookUpdated.getEditorials());
         return bookRepository.save(existingBook);
     }
 

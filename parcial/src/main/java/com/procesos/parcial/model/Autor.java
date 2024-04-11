@@ -1,15 +1,13 @@
 package com.procesos.parcial.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @Entity
+@Table(name = "autor")
 public class Autor {
 
 @Id
@@ -19,5 +17,8 @@ public class Autor {
     private String secondName;
     private String firstLastName;
     private String secondLastName;
+    @OneToOne
+    @JoinColumn(referencedColumnName = "id")
+    private Book book;
 
 }

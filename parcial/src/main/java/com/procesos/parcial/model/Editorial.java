@@ -9,14 +9,17 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Editorial {
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String city;
     private String country;
     private String phoneNumber;
-    @OneToOne
+    @OneToOne(mappedBy = "editorial")
     private Address address;
+    @OneToOne
+    @JoinColumn(referencedColumnName = "id")
+    private Book book;
 
 }
