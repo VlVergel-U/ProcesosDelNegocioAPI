@@ -16,6 +16,10 @@ public class EditorialServiceOp implements EditorialService {
         this.editorialRepository = editorialRepository;
     }
 
+    @Override
+    public Editorial createEditorial(Editorial editorial) {
+        return editorialRepository.save(editorial);
+    }
 
     @Override
     public Editorial updateEditorial(Editorial editorialUpdated, Long id) {
@@ -36,6 +40,11 @@ public class EditorialServiceOp implements EditorialService {
     public Editorial getEditorialById(Long id) {
         Optional<Editorial> editorialBD = editorialRepository.findById(id);
         return editorialBD.orElse(null);
+    }
+
+    @Override
+    public void deleteEditorial(Long id) {
+        editorialRepository.deleteById(id);
     }
 
     @Override

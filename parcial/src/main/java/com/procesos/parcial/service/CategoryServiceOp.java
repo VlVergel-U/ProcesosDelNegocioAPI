@@ -8,14 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-    public class CategoryServiceOp implements CategoryService {
+public class CategoryServiceOp implements CategoryService {
 
-        private final CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     public CategoryServiceOp(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
-
 
     @Override
     public Category createCategory(Category category) {
@@ -33,17 +32,19 @@ import java.util.Optional;
         return null;
     }
 
-
     @Override
     public Category getCategoryById(Long id) {
         Optional<Category> categoryBD = categoryRepository.findById(id);
         return categoryBD.orElse(null);
     }
-        @Override
-        public List<Category> findAllCategories() {
-            return (List<Category>) categoryRepository.findAll();
-        }
+
+    @Override
+    public void deleteCategory(Long id) {
+        categoryRepository.deleteById(id);
     }
 
-
-
+    @Override
+    public List<Category> findAllCategories() {
+        return (List<Category>) categoryRepository.findAll();
+    }
+}
