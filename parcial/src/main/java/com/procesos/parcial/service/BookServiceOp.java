@@ -1,25 +1,25 @@
 package com.procesos.parcial.service;
 
 import com.procesos.parcial.exceptions.AlreadyExistsException;
+import com.procesos.parcial.exceptions.DuplicateAutorException;
 import com.procesos.parcial.exceptions.NotFoundException;
-import com.procesos.parcial.model.Address;
-import com.procesos.parcial.model.Book;
-import com.procesos.parcial.model.Category;
-import com.procesos.parcial.model.Editorial;
+import com.procesos.parcial.model.*;
 import com.procesos.parcial.model.enums.ErrorMessage;
-import com.procesos.parcial.repository.AddressRepository;
-import com.procesos.parcial.repository.BookRepository;
-import com.procesos.parcial.repository.CategoryRepository;
-import com.procesos.parcial.repository.EditorialRepository;
+import com.procesos.parcial.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class BookServiceOp implements BookService {
     private static final Logger logger = LoggerFactory.getLogger(BookServiceOp.class);
     @Autowired
@@ -28,6 +28,8 @@ public class BookServiceOp implements BookService {
     private CategoryRepository categoryRepository;
     @Autowired
     private EditorialRepository editorialRepository;
+    @Autowired
+    private AutorRepository autorRepository;
 
     @Override
     public Book createBook(Book book) {
@@ -52,6 +54,26 @@ public class BookServiceOp implements BookService {
             Editorial savedEditorial = editorialRepository.save(book.getEditorial());
             book.setEditorial(savedEditorial);
         }
+
+        // Verificar si los autores existen
+        List<Autor> authorsToSave = new ArrayList<>();
+        for (Autor author : book.getAuthors()) {
+            Optional<Autor> autorOptional = autorRepository.findByUniqueCode(author.getUniqueCode());
+            if (autorOptional.isPresent()) {
+                authorsToSave.add(autorOptional.get());
+            } else {
+                try {
+                    Autor savedAutor = autorRepository.save(author);
+                    authorsToSave.add(savedAutor);
+                } catch (DataIntegrityViolationException e) {
+                    // Manejar la excepción aquí
+                    throw new DuplicateAutorException("Autor with unique code '" + author.getUniqueCode() + "' already exists");
+                }
+            }
+        }
+        book.setAuthors(new HashSet<>(authorsToSave));
+
+
 
         // Devolver mensaje al cliente
         if (categoryOptional.isPresent()) {
