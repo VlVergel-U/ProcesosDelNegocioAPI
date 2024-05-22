@@ -1,7 +1,7 @@
 package com.procesos.parcial.service;
 
 import com.procesos.parcial.exceptions.AlreadyExistsException;
-import com.procesos.parcial.exceptions.DuplicateAutorException;
+import com.procesos.parcial.exceptions.DuplicateAuthorException;
 import com.procesos.parcial.exceptions.NotFoundException;
 import com.procesos.parcial.model.*;
 import com.procesos.parcial.model.enums.ErrorMessage;
@@ -29,7 +29,7 @@ public class BookServiceOp implements BookService {
     @Autowired
     private EditorialRepository editorialRepository;
     @Autowired
-    private AutorRepository autorRepository;
+    private AuthorRepository authorRepository;
 
     @Override
     public Book createBook(Book book) {
@@ -58,16 +58,15 @@ public class BookServiceOp implements BookService {
         // Verificar si los autores existen
         List<Author> authorsToSave = new ArrayList<>();
         for (Author author : book.getAuthors()) {
-            Optional<Author> autorOptional = autorRepository.findByUniqueCode(author.getUniqueCode());
+            Optional<Author> autorOptional = authorRepository.findByCode(author.getCode());
             if (autorOptional.isPresent()) {
                 authorsToSave.add(autorOptional.get());
             } else {
                 try {
-                    Author savedAutor = autorRepository.save(author);
+                    Author savedAutor = authorRepository.save(author);
                     authorsToSave.add(savedAutor);
                 } catch (DataIntegrityViolationException e) {
-                    // Manejar la excepción aquí
-                    throw new DuplicateAutorException("Autor with unique code '" + author.getUniqueCode() + "' already exists");
+                    throw new DuplicateAuthorException("Autor with unique code '" + author.getCode() + "' already exists");
                 }
             }
         }
@@ -116,6 +115,7 @@ public class BookServiceOp implements BookService {
             existingBookEntity.setCategory(newCategory);
         }
 
+
         // Buscar editorial existente
         Optional<Editorial> editorialOptional = editorialRepository.findByName(updatedBook.getEditorial().getName());
         if (editorialOptional.isPresent()) {
@@ -128,14 +128,14 @@ public class BookServiceOp implements BookService {
         // Buscar autores existentes
         List<Author> authorsToSave = new ArrayList<>();
         for (Author author : updatedBook.getAuthors()) {
-            Optional<Author> autorOptional = autorRepository.findByUniqueCode(author.getUniqueCode());
-            if (autorOptional.isPresent()) {
-                authorsToSave.add(autorOptional.get());
+            Optional<Author> authorOptional = authorRepository.findByCode(author.getCode());
+            if (authorOptional.isPresent()) {
+                authorsToSave.add(authorOptional.get());
             } else {
-                Author newAutor = autorRepository.save(author);
-                authorsToSave.add(newAutor);
+                throw new DuplicateAuthorException("Autor with unique code " + author.getCode() + " already exists.");
             }
         }
+
         existingBookEntity.setAuthors(new HashSet<>(authorsToSave));
 
         return bookRepository.save(existingBookEntity);

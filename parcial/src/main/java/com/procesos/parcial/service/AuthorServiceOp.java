@@ -4,7 +4,7 @@ import com.procesos.parcial.exceptions.AlreadyExistsException;
 import com.procesos.parcial.exceptions.NotFoundException;
 import com.procesos.parcial.model.Author;
 import com.procesos.parcial.model.enums.ErrorMessage;
-import com.procesos.parcial.repository.AutorRepository;
+import com.procesos.parcial.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ import java.util.Optional;
 public class AuthorServiceOp implements AuthorService {
 
     @Autowired
-    private AutorRepository authorRepository;
+    private AuthorRepository authorRepository;
 
     @Override
     public Author createAuthor(Author author) {
-        Optional<Author> findByUniqueCode = authorRepository.findByUniqueCode(author.getUniqueCode());
+        Optional<Author> findByUniqueCode = authorRepository.findByCode(author.getCode());
         if (findByUniqueCode.isPresent()) {
             throw new AlreadyExistsException(ErrorMessage.AUTHOR_ALREADY_EXISTS.getMessage());
         }

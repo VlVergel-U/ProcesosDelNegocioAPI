@@ -61,8 +61,8 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(DuplicateAutorException.class)
-    public ResponseEntity<Response> handleDuplicateAutorException(DuplicateAutorException ex) {
+    @ExceptionHandler(DuplicateAuthorException.class)
+    public ResponseEntity<Response> handleDuplicateAuthorException(DuplicateAuthorException ex) {
         return new ResponseEntity<>(
                 Response.builder()
                         .date(LocalDate.now())

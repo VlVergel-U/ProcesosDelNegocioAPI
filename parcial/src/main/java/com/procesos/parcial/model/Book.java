@@ -22,12 +22,12 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 10, max = 100, message = "")
+    @Size(min = 10, max = 100, message = "The name of the book must be in 10-100 characters")
     @NotBlank(message = "Please provide the name of the book")
     @Column(nullable = false)
     private String name;
 
-    @Size(min = 50, max = 200, message = "")
+    @Size(min = 50, max = 200, message = "The description of the book must be in 50-200 characters")
     @NotBlank(message = "Please provide the description of the book")
     @Column(nullable = false)
     private String description;
@@ -38,13 +38,14 @@ public class Book {
     private Category category;
 
     @Valid
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors = new HashSet<>();
 
+    @Size(min = 1, max =4 , message = "The edition number of the book must be in 1-4 characters")
     @NotBlank(message = "Please provide the edition number of the book")
     @Column(nullable = false)
     private String editionNumber;
@@ -58,7 +59,7 @@ public class Book {
     private LocalDate publicationDate;
 
     @Valid
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
 

@@ -23,23 +23,22 @@ public class Author {
     private Long id;
 
     @Column(unique = true)
-    private String uniqueCode;
+    private String code;
 
-    @Size(min = 2, max = 20, message = "")
+    @Size(min = 2, max = 20, message = "The fisrt name of the author must be in 2-20 characters")
     @NotBlank(message = "Please provide the first name of the author")
     @Column(nullable = false)
     private String firstName;
 
-    @Size(min = 2, max = 20, message = "")
-    @Column()
+    @Column(nullable = true)
     private String secondName;
 
-    @Size(min = 2, max = 20, message = "")
+    @Size(min = 2, max = 20, message = "The first last name of the author must be in 2-20 characters")
     @NotBlank(message = "Please provide the first last name of the author")
     @Column(nullable = false)
     private String firstLastName;
 
-    @Size(min = 2, max = 20, message = "")
+    @Size(min = 2, max = 20, message = "The second last name of the author must be in 2-20 characters")
     @NotBlank(message = "Please provide the second last name of the author")
     @Column(nullable = false)
     private String secondLastName;
@@ -58,6 +57,6 @@ public class Author {
 
     @PrePersist
     public void beforeInsert() {
-        this.uniqueCode = generateUniqueCode();
+        this.code = generateUniqueCode();
     }
 }
