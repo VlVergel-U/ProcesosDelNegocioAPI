@@ -2,41 +2,43 @@ package com.procesos.parcial.controller;
 
 import com.procesos.parcial.model.Editorial;
 import com.procesos.parcial.service.EditorialService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/editorial")
+@RequestMapping("/editorial")
 public class EditorialController {
-    private final EditorialService editorialService;
 
-    public EditorialController(EditorialService editorialService) {
-        this.editorialService = editorialService;
-    }
+    @Autowired
+    private EditorialService editorialService;
 
     @PostMapping
-    public Editorial createEditorial(@RequestBody Editorial editorial) {
-        return editorialService.createEditorial(editorial);
+    public ResponseEntity<Editorial> createEditorial(@RequestBody Editorial editorial) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(editorialService.createEditorial(editorial));
     }
 
     @GetMapping("/{id}")
-    public Editorial getEditorialById(@PathVariable Long id) {
-        return editorialService.getEditorialById(id);
+    public ResponseEntity<Editorial> getEditorialById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(editorialService.getEditorialById(id));
     }
 
     @PutMapping("/{id}")
-    public Editorial updateEditorial(@RequestBody Editorial editorial, @PathVariable Long id) {
-        return editorialService.updateEditorial(editorial, id);
+    public ResponseEntity<Editorial> updateEditorial(@RequestBody Editorial editorial, @PathVariable Long id) {
+        return ResponseEntity.ok().body(editorialService.updateEditorial(editorial, id));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteEditorial(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteEditorial(@PathVariable Long id) {
         editorialService.deleteEditorial(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
-    public List<Editorial> allEditorials() {
-        return editorialService.findAllEditorials();
+    public ResponseEntity<List<Editorial>> allEditorials() {
+        return ResponseEntity.ok().body(editorialService.findAllEditorials());
     }
 }
