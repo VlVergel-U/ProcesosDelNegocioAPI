@@ -1,51 +1,56 @@
-Category
+# API LIBRERIA
+# EndPoints
 
-POST CATEGORY
-http://localhost:8081/category
+## GESTION DE CATEGORIA
 
-GET CATEGORY
-http://localhost:8081/category/{category_id}
+### Post Category
 
-GET CATEGORIES
-http://localhost:8081/category
+<code>http://localhost:8081/category</code>
 
-PUT CATEGORIES
-http://localhost:8081/category/{category_id}
+### Get Category
+<code>http://localhost:8081/category/{category_id}</code>
 
-DELETE CATEGORIES
-http://localhost:8081/category/{category_id}
+### Get Categories
+<code>http://localhost:8081/category</code>
 
-Books 
+### Put Category
+<code>http://localhost:8081/category/{category_id}</code>
 
-POST BOOK
-http://localhost:8081/book
+### Delete Category
+<code>http://localhost:8081/category/{category_id}</code>
 
-GET BOOK
-http://localhost:8081/book/{item_id}
 
-GET BOOKS
-http://localhost:8081/book
+## GESTION DE LIBRO
 
-PUT BOOK
-http://localhost:8081/book/{item_id}
+### Post Book
+<code>http://localhost:8081/book</code>
 
-DELETE BOOK
-http://localhost:8081/book/{item_id}
+### Get Book
+<code>http://localhost:8081/book/{book_id}</code>
 
-Editorials
+### Get Books
+<code>http://localhost:8081/book</code>
 
-POST EDITORIAL
-http://localhost:8081/editorial
+### Put Books
+<code>http://localhost:8081/book/{book_id}</code>
 
-GET EDITORIAL
-http://localhost:8081/editorial/{item_id}
+### Delete Books
+<code>http://localhost:8081/book/{book_id}</code>
 
-GET EDITORIALS
-http://localhost:8081/editorial
+## GESTION DE EDITORIAL
 
-PUT EDITORIAL
-http://localhost:8081/editorial/{item_id}
+### Post Editorial
+<code>http://localhost:8081/editorial</code>
 
-DELETE EDITORIAL
-http://localhost:8081/editorial/{item_id}
+### Get Editorial
+<code>http://localhost:8081/editorial/{editorial_id}</code>
+
+### Get Editorials
+<code>http://localhost:8081/editorial</code>
+
+### Put Editorial
+<code>http://localhost:8081/editorial/{editorial_id}</code>
+
+### Delete Editorial
+<code>http://localhost:8081/editorial/{editorial_id}</code>
 

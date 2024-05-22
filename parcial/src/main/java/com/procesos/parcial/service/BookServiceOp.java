@@ -56,14 +56,14 @@ public class BookServiceOp implements BookService {
         }
 
         // Verificar si los autores existen
-        List<Autor> authorsToSave = new ArrayList<>();
-        for (Autor author : book.getAuthors()) {
-            Optional<Autor> autorOptional = autorRepository.findByUniqueCode(author.getUniqueCode());
+        List<Author> authorsToSave = new ArrayList<>();
+        for (Author author : book.getAuthors()) {
+            Optional<Author> autorOptional = autorRepository.findByUniqueCode(author.getUniqueCode());
             if (autorOptional.isPresent()) {
                 authorsToSave.add(autorOptional.get());
             } else {
                 try {
-                    Autor savedAutor = autorRepository.save(author);
+                    Author savedAutor = autorRepository.save(author);
                     authorsToSave.add(savedAutor);
                 } catch (DataIntegrityViolationException e) {
                     // Manejar la excepción aquí
@@ -98,16 +98,47 @@ public class BookServiceOp implements BookService {
             throw new NotFoundException(ErrorMessage.BOOK_NOT_FOUND.getMessage());
         }
 
-        existingBook.get().setName(updatedBook.getName());
-        existingBook.get().setDescription(updatedBook.getDescription());
-        existingBook.get().setAuthors(updatedBook.getAuthors());
-        existingBook.get().setEditionNumber(updatedBook.getEditionNumber());
-        existingBook.get().setPrice(updatedBook.getPrice());
-        existingBook.get().setPublicationDate(updatedBook.getPublicationDate());
-        existingBook.get().setLanguage(updatedBook.getLanguage());
-        existingBook.get().setCategory(updatedBook.getCategory());
-        existingBook.get().setEditorial(updatedBook.getEditorial());
-        return bookRepository.save(existingBook.get());
+        Book existingBookEntity = existingBook.get();
+
+        existingBookEntity.setName(updatedBook.getName());
+        existingBookEntity.setDescription(updatedBook.getDescription());
+        existingBookEntity.setEditionNumber(updatedBook.getEditionNumber());
+        existingBookEntity.setPrice(updatedBook.getPrice());
+        existingBookEntity.setPublicationDate(updatedBook.getPublicationDate());
+        existingBookEntity.setLanguage(updatedBook.getLanguage());
+
+        // Buscar categoría existente
+        Optional<Category> categoryOptional = categoryRepository.findByName(updatedBook.getCategory().getName());
+        if (categoryOptional.isPresent()) {
+            existingBookEntity.setCategory(categoryOptional.get());
+        } else {
+            Category newCategory = categoryRepository.save(updatedBook.getCategory());
+            existingBookEntity.setCategory(newCategory);
+        }
+
+        // Buscar editorial existente
+        Optional<Editorial> editorialOptional = editorialRepository.findByName(updatedBook.getEditorial().getName());
+        if (editorialOptional.isPresent()) {
+            existingBookEntity.setEditorial(editorialOptional.get());
+        } else {
+            Editorial newEditorial = editorialRepository.save(updatedBook.getEditorial());
+            existingBookEntity.setEditorial(newEditorial);
+        }
+
+        // Buscar autores existentes
+        List<Author> authorsToSave = new ArrayList<>();
+        for (Author author : updatedBook.getAuthors()) {
+            Optional<Author> autorOptional = autorRepository.findByUniqueCode(author.getUniqueCode());
+            if (autorOptional.isPresent()) {
+                authorsToSave.add(autorOptional.get());
+            } else {
+                Author newAutor = autorRepository.save(author);
+                authorsToSave.add(newAutor);
+            }
+        }
+        existingBookEntity.setAuthors(new HashSet<>(authorsToSave));
+
+        return bookRepository.save(existingBookEntity);
     }
 
     @Override

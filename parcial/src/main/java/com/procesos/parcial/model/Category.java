@@ -18,7 +18,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Please provide the category")
+    @NotBlank(message = "Please provide the category of the book")
     @Size(max = 50, min = 3, message = "Category name must be between 3 and 50 characters")
     @Column(nullable = false, unique = true)
     private String name;

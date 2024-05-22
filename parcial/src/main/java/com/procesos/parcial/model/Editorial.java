@@ -22,19 +22,19 @@ public class Editorial {
     private long id;
 
     @Size(min = 2, max = 40, message = "")
-    @NotBlank(message = "Please provide the name")
+    @NotBlank(message = "Please provide the name of the editorial")
     @Column(nullable = false)
     private String name;
 
-    @NotBlank(message = "Please provide the city")
+    @NotBlank(message = "Please provide the city of the editorial")
     @Column(nullable = false)
     private String city;
 
-    @NotBlank(message = "Please provide the country")
+    @NotBlank(message = "Please provide the country of the editorial")
     @Column(nullable = false)
     private String country;
 
-    @NotBlank(message = "Please provide the phone number")
+    @NotBlank(message = "Please provide the phone number of the editorial")
     @Column(nullable = false)
     private String phoneNumber;
 

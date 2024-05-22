@@ -10,14 +10,13 @@ import lombok.NoArgsConstructor;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "autor")
-public class Autor {
+@Table(name = "author")
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +26,7 @@ public class Autor {
     private String uniqueCode;
 
     @Size(min = 2, max = 20, message = "")
-    @NotBlank(message = "Please provide the first name")
+    @NotBlank(message = "Please provide the first name of the author")
     @Column(nullable = false)
     private String firstName;
 
@@ -36,16 +35,16 @@ public class Autor {
     private String secondName;
 
     @Size(min = 2, max = 20, message = "")
-    @NotBlank(message = "Please provide the first last name")
+    @NotBlank(message = "Please provide the first last name of the author")
     @Column(nullable = false)
     private String firstLastName;
 
     @Size(min = 2, max = 20, message = "")
-    @NotBlank(message = "Please provide the second last name")
+    @NotBlank(message = "Please provide the second last name of the author")
     @Column(nullable = false)
     private String secondLastName;
 
-    @NotNull(message = "Please provide the birthdate")
+    @NotNull(message = "Please provide the birthdate of the author")
     @Column(nullable = false)
     private Date birthDate;
 
