@@ -13,21 +13,21 @@ import com.procesos.parcial.repository.CategoryRepository;
 import com.procesos.parcial.repository.EditorialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BookServiceOp implements BookService {
-
+    private static final Logger logger = LoggerFactory.getLogger(BookServiceOp.class);
     @Autowired
     private BookRepository bookRepository;
     @Autowired
-    private EditorialRepository editorialRepository;
-    @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
-    private AddressRepository addressRepository;
+    private EditorialRepository editorialRepository;
 
     @Override
     public Book createBook(Book book) {
@@ -35,7 +35,37 @@ public class BookServiceOp implements BookService {
         if (findByName.isPresent()) {
             throw new AlreadyExistsException(ErrorMessage.BOOK_ALREADY_EXISTS.getMessage());
         }
-        
+//verificar si categoria existe
+        Optional<Category> categoryOptional = categoryRepository.findByName(book.getCategory().getName());
+        if (categoryOptional.isPresent()) {
+            book.setCategory(categoryOptional.get());
+        } else {
+            Category savedCategory = categoryRepository.save(book.getCategory());
+            book.setCategory(savedCategory);
+        }
+
+//verificar si editorial existe
+        Optional<Editorial> editorialOptional = editorialRepository.findByName(book.getEditorial().getName());
+        if (editorialOptional.isPresent()) {
+            book.setEditorial(editorialOptional.get());
+        } else {
+            Editorial savedEditorial = editorialRepository.save(book.getEditorial());
+            book.setEditorial(savedEditorial);
+        }
+
+        // Devolver mensaje al cliente
+        if (categoryOptional.isPresent()) {
+            logger.info("La categoría {} ya existe, se utilizó la existente.", book.getCategory().getName());
+        } else {
+            logger.info("Se creó la nueva categoría {}.", book.getCategory().getName());
+        }
+
+        if (editorialOptional.isPresent()) {
+            logger.info("La editorial {} ya existe, se utilizó la existente.", book.getEditorial().getName());
+        } else {
+            logger.info("Se creó la nueva editorial {}.", book.getEditorial().getName());
+        }
+
         return bookRepository.save(book);
     }
 

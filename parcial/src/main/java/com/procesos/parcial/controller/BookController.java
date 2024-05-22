@@ -2,6 +2,8 @@ package com.procesos.parcial.controller;
 
 import com.procesos.parcial.model.Book;
 import com.procesos.parcial.service.BookService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,23 +19,23 @@ public class BookController {
     private BookService bookService;
 
     @PostMapping
-    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+    public ResponseEntity<Book> createBook(@Valid @RequestBody Book book) {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(book));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable Long id) {
+    public ResponseEntity<Book> getBookById(@PathVariable @Min(1) Long id) {
 
         return ResponseEntity.ok().body(bookService.getBookById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@RequestBody Book book, @PathVariable Long id) {
+    public ResponseEntity<Book> updateBook(@Valid @RequestBody Book book, @PathVariable @Min(1) Long id) {
         return ResponseEntity.ok(bookService.updateBook(book, id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBook(@PathVariable @Min(1) Long id) {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
     }

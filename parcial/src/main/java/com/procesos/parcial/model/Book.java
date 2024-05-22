@@ -23,10 +23,6 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
-    private Category category;
-
     @Size(min = 10, max = 100, message = "")
     @NotBlank(message = "Please provide the name")
     @Column(nullable = false)
@@ -36,6 +32,10 @@ public class Book {
     @NotBlank(message = "Please provide the description")
     @Column(nullable = false)
     private String description;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
