@@ -23,6 +23,10 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @Size(min = 10, max = 100, message = "")
     @NotBlank(message = "Please provide the name")
     @Column(nullable = false)
@@ -33,16 +37,12 @@ public class Book {
     @Column(nullable = false)
     private String description;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Autor> authors = new HashSet<>();
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
 
     @NotBlank(message = "Please provide the edition number")
     @Column(nullable = false)
@@ -56,7 +56,7 @@ public class Book {
     @Column(nullable = false)
     private LocalDate publicationDate;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
 

@@ -38,10 +38,8 @@ public class Editorial {
     @Column(nullable = false)
     private String phoneNumber;
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @OneToMany(mappedBy = "editorial")
-    private List<Book> books;
 }

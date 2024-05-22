@@ -33,6 +33,4 @@ public class Address {
     @Column(nullable = false)
     private String neighborhood;
 
-    @OneToOne(mappedBy = "address")
-    private Editorial editorial;
 }

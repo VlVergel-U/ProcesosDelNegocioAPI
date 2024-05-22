@@ -35,49 +35,27 @@ public class BookServiceOp implements BookService {
         if (findByName.isPresent()) {
             throw new AlreadyExistsException(ErrorMessage.BOOK_ALREADY_EXISTS.getMessage());
         }
-
-        if (book.getEditorial() != null && book.getEditorial().getAddress() != null) {
-            Address address = book.getEditorial().getAddress();
-            Address savedAddress = addressRepository.save(address);
-            book.getEditorial().setAddress(savedAddress);
-        }
-
-        if (book.getEditorial() != null) {
-            Optional<Editorial> existingEditorial = editorialRepository.findByName(book.getEditorial().getName());
-            if (existingEditorial.isPresent()) {
-                book.setEditorial(existingEditorial.get());
-            } else {
-                Editorial savedEditorial = editorialRepository.save(book.getEditorial());
-                book.setEditorial(savedEditorial);
-            }
-        }
-
-        if (book.getCategory() != null) {
-            Optional<Category> existingCategory = categoryRepository.findById(book.getCategory().getId());
-            if (existingCategory.isEmpty()) {
-                // Category doesn't exist, save it
-                Category savedCategory = categoryRepository.save(book.getCategory());
-                // Set the saved category to the book
-                book.setCategory(savedCategory);
-            } else {
-                book.setCategory(existingCategory.get());
-            }
-        }
-
+        
         return bookRepository.save(book);
     }
 
     @Override
-    public Book updateBook(Book book, Long id) {
+    public Book updateBook(Book updatedBook, Long id) {
         Optional<Book> existingBook = bookRepository.findById(id);
         if (existingBook.isEmpty()) {
             throw new NotFoundException(ErrorMessage.BOOK_NOT_FOUND.getMessage());
         }
 
-        // Update the book fields as needed
-        // ...
-
-        return bookRepository.save(book);
+        existingBook.get().setName(updatedBook.getName());
+        existingBook.get().setDescription(updatedBook.getDescription());
+        existingBook.get().setAuthors(updatedBook.getAuthors());
+        existingBook.get().setEditionNumber(updatedBook.getEditionNumber());
+        existingBook.get().setPrice(updatedBook.getPrice());
+        existingBook.get().setPublicationDate(updatedBook.getPublicationDate());
+        existingBook.get().setLanguage(updatedBook.getLanguage());
+        existingBook.get().setCategory(updatedBook.getCategory());
+        existingBook.get().setEditorial(updatedBook.getEditorial());
+        return bookRepository.save(existingBook.get());
     }
 
     @Override
