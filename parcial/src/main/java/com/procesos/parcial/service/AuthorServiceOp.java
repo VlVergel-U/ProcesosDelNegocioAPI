@@ -24,7 +24,6 @@ public class AuthorServiceOp implements AuthorService {
         if (findByUniqueCode.isPresent()) {
             throw new AlreadyExistsException(ErrorMessage.AUTHOR_ALREADY_EXISTS.getMessage());
         }
-
         return authorRepository.save(author);
     }
 

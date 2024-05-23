@@ -37,7 +37,6 @@ public class Book {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Valid
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_author",

@@ -1,7 +1,9 @@
 package com.procesos.parcial.service;
 
+import com.procesos.parcial.Validations.AuthorValidator;
 import com.procesos.parcial.exceptions.AlreadyExistsException;
 import com.procesos.parcial.exceptions.DuplicateAuthorException;
+import com.procesos.parcial.exceptions.InvalidAuthorException;
 import com.procesos.parcial.exceptions.NotFoundException;
 import com.procesos.parcial.model.*;
 import com.procesos.parcial.model.enums.ErrorMessage;
@@ -13,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -30,6 +29,7 @@ public class BookServiceOp implements BookService {
     private EditorialRepository editorialRepository;
     @Autowired
     private AuthorRepository authorRepository;
+    private Author author;
 
     @Override
     public Book createBook(Book book) {
@@ -37,6 +37,46 @@ public class BookServiceOp implements BookService {
         if (findByName.isPresent()) {
             throw new AlreadyExistsException(ErrorMessage.BOOK_ALREADY_EXISTS.getMessage());
         }
+
+        // Verificar si los autores existen
+        Set<Author> authorsToSave = new HashSet<>();
+        for (Author author : book.getAuthors()) {
+            if (author.getId() == null) {
+                // El autor no existe, crear uno nuevo
+                AuthorValidator authorValidator = new AuthorValidator();
+                if (!authorValidator.isValid(author)) {
+                    throw new InvalidAuthorException("Los campos de autor no son válidos");
+                }
+                try {
+                    Author savedAutor = authorRepository.save(author);
+                    authorsToSave.add(savedAutor);
+                } catch (DataIntegrityViolationException e) {
+                    throw new DuplicateAuthorException("Autor with unique code '" + author.getCode() + "' already exists");
+                }
+            } else {
+                // El autor ya existe, buscarlo en la base de datos
+                Optional<Author> autorOptional = authorRepository.findById(author.getId());
+                if (autorOptional.isPresent()) {
+                    authorsToSave.add(autorOptional.get());
+                } else {
+                    // El autor no existe, crear uno nuevo
+                    AuthorValidator authorValidator = new AuthorValidator();
+                    if (!authorValidator.isValid(author)) {
+                        throw new InvalidAuthorException("Los campos de autor no son válidos");
+                    }
+                    try {
+                        Author savedAutor = authorRepository.save(author);
+                        authorsToSave.add(savedAutor);
+                    } catch (DataIntegrityViolationException e) {
+                        throw new DuplicateAuthorException("Autor with unique code '" + author.getCode() + "' already exists");
+                    }
+                }
+            }
+        }
+
+        book.setAuthors(authorsToSave);
+
+
 //verificar si categoria existe
         Optional<Category> categoryOptional = categoryRepository.findByName(book.getCategory().getName());
         if (categoryOptional.isPresent()) {
@@ -54,25 +94,6 @@ public class BookServiceOp implements BookService {
             Editorial savedEditorial = editorialRepository.save(book.getEditorial());
             book.setEditorial(savedEditorial);
         }
-
-        // Verificar si los autores existen
-        List<Author> authorsToSave = new ArrayList<>();
-        for (Author author : book.getAuthors()) {
-            Optional<Author> autorOptional = authorRepository.findByCode(author.getCode());
-            if (autorOptional.isPresent()) {
-                authorsToSave.add(autorOptional.get());
-            } else {
-                try {
-                    Author savedAutor = authorRepository.save(author);
-                    authorsToSave.add(savedAutor);
-                } catch (DataIntegrityViolationException e) {
-                    throw new DuplicateAuthorException("Autor with unique code '" + author.getCode() + "' already exists");
-                }
-            }
-        }
-        book.setAuthors(new HashSet<>(authorsToSave));
-
-
 
         // Devolver mensaje al cliente
         if (categoryOptional.isPresent()) {

@@ -88,4 +88,16 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST
         );
     }
+
+    @ExceptionHandler(InvalidAuthorException.class)
+    public ResponseEntity<Response> handleInvalidAuthorException(InvalidAuthorException ex) {
+        return new ResponseEntity<>(
+                Response.builder()
+                        .date(LocalDate.now())
+                        .message(List.of(ex.getMessage()))
+                        .statusCode(HttpStatus.BAD_REQUEST.name())
+                        .build(),
+                HttpStatus.BAD_REQUEST
+        );
+    }
 }
