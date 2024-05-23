@@ -1,6 +1,7 @@
 package com.procesos.parcial.controller;
 
 import com.procesos.parcial.model.Book;
+import com.procesos.parcial.model.dto.Request;
 import com.procesos.parcial.service.BookService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -21,8 +22,8 @@ public class BookController {
     private BookService bookService;
 
     @PostMapping
-    public ResponseEntity<Book> createBook(@Valid @RequestBody Book book) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(book));
+    public ResponseEntity<Book> createBook(@Valid @RequestBody Request<Book> request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(request.getObject()));
     }
 
     @GetMapping("/{id}")
@@ -32,8 +33,8 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@Valid @RequestBody Book book, @PathVariable @Min(1) Long id) {
-        return ResponseEntity.ok(bookService.updateBook(book, id));
+    public ResponseEntity<Book> updateBook(@Valid @RequestBody Request<Book> request, @PathVariable @Min(1) Long id) {
+        return ResponseEntity.ok(bookService.updateBook(request.getObject(), id));
     }
 
     @DeleteMapping("/{id}")

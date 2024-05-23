@@ -1,6 +1,7 @@
 package com.procesos.parcial.controller;
 
 import com.procesos.parcial.model.Author;
+import com.procesos.parcial.model.dto.Request;
 import com.procesos.parcial.service.AuthorService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -21,8 +22,8 @@ public class AuthorController {
     private AuthorService authorService;
 
     @PostMapping
-    public ResponseEntity<Author> createAuthor(@Valid @RequestBody Author author) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(authorService.createAuthor(author));
+    public ResponseEntity<Author> createAuthor(@Valid @RequestBody Request<Author> request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(authorService.createAuthor(request.getObject()));
     }
 
     @GetMapping("/{id}")
@@ -31,8 +32,8 @@ public class AuthorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Author> updateAuthor(@Valid @RequestBody Author author, @PathVariable @Min(1) Long id) {
-        return ResponseEntity.ok(authorService.updateAuthor(author, id));
+    public ResponseEntity<Author> updateAuthor(@Valid @RequestBody Request<Author> request, @PathVariable @Min(1) Long id) {
+        return ResponseEntity.ok(authorService.updateAuthor(request.getObject(), id));
     }
 
     @DeleteMapping("/{id}")

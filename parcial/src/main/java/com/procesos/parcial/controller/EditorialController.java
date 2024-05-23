@@ -1,6 +1,7 @@
 package com.procesos.parcial.controller;
 
 import com.procesos.parcial.model.Editorial;
+import com.procesos.parcial.model.dto.Request;
 import com.procesos.parcial.service.EditorialService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -21,8 +22,8 @@ public class EditorialController {
     private EditorialService editorialService;
 
     @PostMapping
-    public ResponseEntity<Editorial> createEditorial(@Valid @RequestBody Editorial editorial) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(editorialService.createEditorial(editorial));
+    public ResponseEntity<Editorial> createEditorial(@Valid @RequestBody Request<Editorial> request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(editorialService.createEditorial(request.getObject()));
     }
 
     @GetMapping("/{id}")
@@ -31,8 +32,8 @@ public class EditorialController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Editorial> updateEditorial(@Valid @RequestBody Editorial editorial, @PathVariable @Min(1) Long id) {
-        return ResponseEntity.ok().body(editorialService.updateEditorial(editorial, id));
+    public ResponseEntity<Editorial> updateEditorial(@Valid @RequestBody Request<Editorial> request, @PathVariable @Min(1) Long id) {
+        return ResponseEntity.ok().body(editorialService.updateEditorial(request.getObject(), id));
     }
 
     @DeleteMapping("/{id}")

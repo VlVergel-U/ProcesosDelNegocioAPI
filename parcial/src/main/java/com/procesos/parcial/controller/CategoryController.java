@@ -1,6 +1,7 @@
 package com.procesos.parcial.controller;
 
 import com.procesos.parcial.model.Category;
+import com.procesos.parcial.model.dto.Request;
 import com.procesos.parcial.service.CategoryService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -22,8 +23,8 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@Valid  @RequestBody Category category) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory(category));
+    public ResponseEntity<Category> createCategory(@Valid  @RequestBody Request<Category> request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory(request.getObject()));
     }
 
     @GetMapping("/{id}")
@@ -32,8 +33,8 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@Valid @RequestBody Category category, @PathVariable @Min(1) Long id) {
-        return ResponseEntity.ok().body(categoryService.updateCategory(category, id));
+    public ResponseEntity<Category> updateCategory(@Valid @RequestBody Request<Category> request, @PathVariable @Min(1) Long id) {
+        return ResponseEntity.ok().body(categoryService.updateCategory(request.getObject(), id));
     }
 
     @DeleteMapping("/{id}")
