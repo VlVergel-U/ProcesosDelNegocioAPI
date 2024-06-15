@@ -101,4 +101,4 @@
 
 # ¡Explora la API!
 --------------------
-![GIF de una persona leyendo un libro](https://media.giphy.com/media/3o84sBmXpMc4/giphy.gif)
+![Persona leyendo un libro](https://media.giphy.com/media/SrM826tgscTMzJpNFg/giphy.gif?cid=790b76117iufyl1l62r0m5ghwabp4ai27bvzvbe5h1964gsl&ep=v1_gifs_search&rid=giphy.gif&ct=g)
