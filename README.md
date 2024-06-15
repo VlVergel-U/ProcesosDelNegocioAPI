@@ -1,4 +1,4 @@
-# 📘 API Biblioteca
+# 📘 API Librería
 ## EndPoints
 
 ### Gestión de Usuario
