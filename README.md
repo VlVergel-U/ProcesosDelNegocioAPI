@@ -1,4 +1,9 @@
-# 📚 API Librería
+# API Librería
+
+![Persona leyendo un libro](https://media.giphy.com/media/SrM826tgscTMzJpNFg/giphy.gif?cid=790b76117iufyl1l62r0m5ghwabp4ai27bvzvbe5h1964gsl&ep=v1_gifs_search&rid=giphy.gif&ct=g)
+--------------------
+
+
 ## EndPoints
 
 ### Gestión de Usuario
@@ -98,7 +103,3 @@
 
 # Enlace a Postman
 [<img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" height="30">](https://procesosdelnegocio1.postman.co/workspace/9974ffcd-5a1f-4729-b399-4b275b327a2c)
-
-# ¡Explora la API!
---------------------
-![Persona leyendo un libro](https://media.giphy.com/media/SrM826tgscTMzJpNFg/giphy.gif?cid=790b76117iufyl1l62r0m5ghwabp4ai27bvzvbe5h1964gsl&ep=v1_gifs_search&rid=giphy.gif&ct=g)
