@@ -1,2 +1,7 @@
-package com.procesos.parcial.exceptions;public class AuthenticationFailedException {
+package com.procesos.parcial.exceptions;
+
+public class AuthenticationFailedException extends RuntimeException {
+    public AuthenticationFailedException(String message) {
+        super(message);
+    }
 }

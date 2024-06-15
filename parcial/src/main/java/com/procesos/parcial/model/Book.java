@@ -2,10 +2,8 @@ package com.procesos.parcial.model;
 
 import com.procesos.parcial.model.enums.Language;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -46,11 +44,13 @@ public class Book {
 
     @Size(min = 1, max =4 , message = "The edition number of the book must be in 1-4 characters")
     @NotBlank(message = "Please provide the edition number of the book")
+    @Pattern(regexp = "^[0-9]+$", message = "The edition number must be a number")
     @Column(nullable = false)
     private String editionNumber;
 
     @NotNull(message = "Please provide the price of the book")
     @Column(nullable = false)
+    @DecimalMin(value = "0.0", message = "Price must be a positive number")
     private Double price;
 
     @NotNull(message = "Please provide the publication date of the book")

@@ -19,12 +19,14 @@ public enum ErrorMessage {
     AUTHOR_NOT_FOUND("Author not found!"),
     AUTHOR_ALREADY_EXISTS("Author already exists!"),
     AUTHOR_HASNT_BEEN_UPDATED("Author hasn't been updated!"),
-    AUTHOR_HASNT_BEEN_DELETED("Author hasn't been deleted!");
-    CREDENTIAL_INVALID("The credentials is invalid");
+    AUTHOR_HASNT_BEEN_DELETED("Author hasn't been deleted!"),
+    USER_NOT_FOUND("User not found!"),
+    USER_EMAIL_EXISTS("The email is already registered"),
+    INVALID_CREDENTIAL("The credentials is invalid");
+
     private final String message;
 
     ErrorMessage(String message) {
-
         this.message = message;
     }
 
