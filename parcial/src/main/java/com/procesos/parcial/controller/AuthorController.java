@@ -2,6 +2,7 @@ package com.procesos.parcial.controller;
 
 import com.procesos.parcial.model.Author;
 import com.procesos.parcial.model.dto.Request;
+import com.procesos.parcial.model.dto.Response;
 import com.procesos.parcial.service.AuthorService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -22,28 +23,28 @@ public class AuthorController {
     private AuthorService authorService;
 
     @PostMapping
-    public ResponseEntity<Author> createAuthor(@Valid @RequestBody Request<Author> request) {
+    public ResponseEntity<Response> createAuthor(@Valid @RequestBody Request<Author> request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authorService.createAuthor(request.getObject()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Author> getAuthorById(@PathVariable @Min(1) Long id) {
+    public ResponseEntity<Response> getAuthorById(@PathVariable @Min(1) Long id) {
         return ResponseEntity.ok().body(authorService.getAuthorById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Author> updateAuthor(@Valid @RequestBody Request<Author> request, @PathVariable @Min(1) Long id) {
+    public ResponseEntity<Response> updateAuthor(@Valid @RequestBody Request<Author> request, @PathVariable @Min(1) Long id) {
         return ResponseEntity.ok(authorService.updateAuthor(request.getObject(), id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAuthor(@PathVariable @Min(1) Long id) {
-        authorService.deleteAuthor(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Response> deleteAuthor(@PathVariable @Min(1) Long id) {
+        return ResponseEntity.ok().body(authorService.deleteAuthor(id));
+
     }
 
     @GetMapping
-    public ResponseEntity<List<Author>> allAuthors() {
+    public ResponseEntity<Response> allAuthors() {
         return ResponseEntity.ok().body(authorService.findAllAuthors());
     }
 }

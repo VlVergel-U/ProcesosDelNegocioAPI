@@ -13,5 +13,6 @@ public class Response {
     private LocalDate date;
     private List<String> message;
     private String statusCode;
+    private Object data;
 
 }

@@ -98,3 +98,7 @@
 
 # Enlace a Postman
 [<img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" height="30">](https://procesosdelnegocio1.postman.co/workspace/9974ffcd-5a1f-4729-b399-4b275b327a2c)
+
+# ¡Explora la API!
+--------------------
+![GIF de una persona leyendo un libro](https://media.giphy.com/media/3o84sBmXpMc4/giphy.gif)

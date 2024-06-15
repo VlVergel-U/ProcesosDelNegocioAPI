@@ -1,12 +1,14 @@
 package com.procesos.parcial.service;
 
 import com.procesos.parcial.model.Category;
+import com.procesos.parcial.model.dto.Response;
+
 import java.util.List;
 
 public interface CategoryService {
-    Category createCategory(Category category);
-    Category updateCategory(Category category, Long id);
-    Category getCategoryById(Long id);
-    void deleteCategory(Long id);
-    List<Category> findAllCategories();
+    Response createCategory(Category category);
+    Response updateCategory(Category category, Long id);
+    Response getCategoryById(Long id);
+    Response deleteCategory(Long id);
+    Response findAllCategories();
 }

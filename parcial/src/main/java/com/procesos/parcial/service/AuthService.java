@@ -7,6 +7,7 @@ import com.procesos.parcial.model.dto.AuthResponse;
 import com.procesos.parcial.model.dto.Response;
 import com.procesos.parcial.model.enums.ErrorMessage;
 import com.procesos.parcial.model.enums.Role;
+import com.procesos.parcial.model.enums.SuccessMessage;
 import com.procesos.parcial.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -53,6 +54,7 @@ public class AuthService {
 
         String token = jwtService.getToken(userDetails);
         return AuthResponse.builder()
+                .message(SuccessMessage.LOGIN_SUCCESSFUL.getMessage())
                 .token(token)
                 .email(user.getUsername())
                 .role(user.getRole().toString())
@@ -80,8 +82,9 @@ public class AuthService {
         userRepository.save(user);
         Response response = Response.builder()
                 .date(LocalDate.now())
-                .message(List.of("Usuario registrado exitosamente"))
+                .message(List.of(SuccessMessage.USER_CREATED.getMessage()))
                 .statusCode(HttpStatus.OK.name())
+                .data(user)
                 .build();
 
         return response;

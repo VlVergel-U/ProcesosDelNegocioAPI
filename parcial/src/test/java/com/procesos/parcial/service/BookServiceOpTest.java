@@ -1,6 +1,7 @@
 package com.procesos.parcial.service;
 
 import com.procesos.parcial.model.*;
+import com.procesos.parcial.model.dto.Response;
 import com.procesos.parcial.model.enums.Language;
 import com.procesos.parcial.repository.AuthorRepository;
 import com.procesos.parcial.repository.BookRepository;
@@ -13,7 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import org.springframework.http.HttpStatus;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
@@ -39,6 +40,9 @@ public class BookServiceOpTest {
 
     @Mock
     private AuthorRepository authorRepository;
+
+    @Mock
+    Response response;
 
     private Book book;
     private Category category;
@@ -103,9 +107,11 @@ public class BookServiceOpTest {
         when(bookRepository.findAll()).thenReturn(Arrays.asList(book));
 
         // Llamada al método a probar
-        List<Book> books = bookServiceOp.findAllBooks();
+        response = bookServiceOp.findAllBooks();
 
         // Verificación del resultado
+        assertEquals(HttpStatus.OK.toString() ,response.getStatusCode());
+        List<Book> books = (List<Book>) response.getData();
         assertEquals(1, books.size()); // Verificar que se haya retornado un libro
         assertEquals(book, books.get(0)); // Verificar que se haya retornado el libro correcto
     }
@@ -116,9 +122,11 @@ public class BookServiceOpTest {
         when(categoryRepository.findByName(anyString())).thenReturn(Optional.of(category));
         when(editorialRepository.findByName(anyString())).thenReturn(Optional.of(editorial));
 
-        Book createdBook = bookServiceOp.createBook(book);
+        Response response = bookServiceOp.createBook(book);
 
-        assertNotNull(createdBook);
+        assertNotNull(response);
+        assertEquals(HttpStatus.CREATED.toString(), response.getStatusCode());
+        Book createdBook = (Book) response.getData();
         assertEquals(book.getName(), createdBook.getName());
         assertEquals(book.getDescription(), createdBook.getDescription());
         assertEquals(book.getCategory(), createdBook.getCategory());
@@ -139,10 +147,12 @@ public class BookServiceOpTest {
         when(bookRepository.save(book)).thenReturn(book);
 
         // Llamada al método a probar
-        Book updatedBook = bookServiceOp.updateBook(book, book.getId());
+        Response response = bookServiceOp.updateBook(book, book.getId());
 
         // Verificación del resultado
-        assertNotNull(updatedBook);
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK.toString(), response.getStatusCode());
+        Book updatedBook = (Book) response.getData();
         assertEquals(book.getName(), updatedBook.getName());
         assertEquals(book.getDescription(), updatedBook.getDescription());
         // Verificar otros campos del libro
@@ -161,11 +171,13 @@ public class BookServiceOpTest {
         when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
 
         // Llamada al método a probar
-        Optional<Book> bookOptional = Optional.ofNullable(bookServiceOp.getBookById(book.getId()));
+        Response response = bookServiceOp.getBookById(book.getId());
 
         // Verificación del resultado
-        assertTrue(bookOptional.isPresent());
-        assertEquals(book, bookOptional.get());
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK.toString(), response.getStatusCode());
+        Book returnedBook = (Book) response.getData();
+        assertEquals(book, returnedBook);
     }
 
     @Test
@@ -174,10 +186,11 @@ public class BookServiceOpTest {
         when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
 
         //llama a deleteBook con el id correcto del libro
-        assertDoesNotThrow(() -> bookServiceOp.deleteBook(book.getId()));
+        Response response = bookServiceOp.deleteBook(book.getId());
 
         //Verifica que el método de deleteById sea llamado con el id correcto del libro
         verify(bookRepository, times(1)).deleteById(book.getId());
+        assertEquals(HttpStatus.OK.toString(), response.getStatusCode());
     }
 
 }

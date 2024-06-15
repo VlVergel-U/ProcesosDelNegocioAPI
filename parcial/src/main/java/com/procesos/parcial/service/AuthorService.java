@@ -1,15 +1,16 @@
 package com.procesos.parcial.service;
 
 import com.procesos.parcial.model.Author;
+import com.procesos.parcial.model.dto.Response;
 
 import java.util.List;
 
 public interface AuthorService {
 
-    Author createAuthor(Author author);
-    Author updateAuthor(Author author, Long id);
-    Author getAuthorById(Long id);
-    void deleteAuthor(Long id);
-    List<Author> findAllAuthors();
+    Response createAuthor(Author author);
+    Response updateAuthor(Author author, Long id);
+    Response getAuthorById(Long id);
+    Response deleteAuthor(Long id);
+    Response findAllAuthors();
 
 }

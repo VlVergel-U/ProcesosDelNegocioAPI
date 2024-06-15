@@ -2,6 +2,7 @@ package com.procesos.parcial.controller;
 
 import com.procesos.parcial.model.Book;
 import com.procesos.parcial.model.dto.Request;
+import com.procesos.parcial.model.dto.Response;
 import com.procesos.parcial.service.BookService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -22,29 +23,28 @@ public class BookController {
     private BookService bookService;
 
     @PostMapping
-    public ResponseEntity<Book> createBook(@Valid @RequestBody Request<Book> request) {
+    public ResponseEntity<Response> createBook(@Valid @RequestBody Request<Book> request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(request.getObject()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable @Min(1) Long id) {
+    public ResponseEntity<Response> getBookById(@PathVariable @Min(1) Long id) {
 
         return ResponseEntity.ok().body(bookService.getBookById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@Valid @RequestBody Request<Book> request, @PathVariable @Min(1) Long id) {
+    public ResponseEntity<Response> updateBook(@Valid @RequestBody Request<Book> request, @PathVariable @Min(1) Long id) {
         return ResponseEntity.ok(bookService.updateBook(request.getObject(), id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable @Min(1) Long id) {
-        bookService.deleteBook(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Response> deleteBook(@PathVariable @Min(1) Long id) {
+        return ResponseEntity.ok().body(bookService.deleteBook(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> allBooks() {
+    public ResponseEntity<Response> allBooks() {
         return ResponseEntity.ok().body(bookService.findAllBooks());
     }
 }
