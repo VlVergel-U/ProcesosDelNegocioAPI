@@ -1,56 +1,97 @@
 # API LIBRERIA
-# EndPoints
+## EndPoints
 
-## GESTION DE CATEGORIA
+### Gestión de Usuario
 
-### Post Category
+#### Crear Usuario
+<code style="background-color:#f0f0f0">POST</code> <code>http://localhost:8081/user</code>
 
-<code>http://localhost:8081/category</code>
+#### Obtener Usuario por ID
+<code style="background-color:#f0f0f0">GET</code> <code>http://localhost:8081/user/{id}</code>
 
-### Get Category
-<code>http://localhost:8081/category/{category_id}</code>
+#### Actualizar Usuario
+<code style="background-color:#f0f0f0">PUT</code> <code>http://localhost:8081/user/{id}</code>
 
-### Get Categories
-<code>http://localhost:8081/category</code>
-
-### Put Category
-<code>http://localhost:8081/category/{category_id}</code>
-
-### Delete Category
-<code>http://localhost:8081/category/{category_id}</code>
+#### Obtener Todos los Usuarios
+<code style="background-color:#f0f0f0">GET</code> <code>http://localhost:8081/user</code>
 
 
-## GESTION DE LIBRO
+### Gestión de Autenticación de Usuario
 
-### Post Book
-<code>http://localhost:8081/book</code>
+#### Iniciar Sesión
+<code style="background-color:#f0f0f0">POST</code> <code>http://localhost:8081/auth/login</code>
 
-### Get Book
-<code>http://localhost:8081/book/{book_id}</code>
+#### Registrarse
+<code style="background-color:#f0f0f0">POST</code> <code>http://localhost:8081/auth/register</code>
 
-### Get Books
-<code>http://localhost:8081/book</code>
 
-### Put Books
-<code>http://localhost:8081/book/{book_id}</code>
+### Gestión de Autor
 
-### Delete Books
-<code>http://localhost:8081/book/{book_id}</code>
+#### Crear Autor
+<code style="background-color:#f0f0f0">POST</code> <code>http://localhost:8081/author</code>
 
-## GESTION DE EDITORIAL
+#### Obtener Autor por ID
+<code style="background-color:#f0f0f0">GET</code> <code>http://localhost:8081/author/{id}</code>
 
-### Post Editorial
-<code>http://localhost:8081/editorial</code>
+#### Actualizar Autor
+<code style="background-color:#f0f0f0">PUT</code> <code>http://localhost:8081/author/{id}</code>
 
-### Get Editorial
-<code>http://localhost:8081/editorial/{editorial_id}</code>
+#### Eliminar Autor
+<code style="background-color:#f0f0f0">DELETE</code> <code>http://localhost:8081/author/{id}</code>
 
-### Get Editorials
-<code>http://localhost:8081/editorial</code>
+#### Obtener Todos los Autores
+<code style="background-color:#f0f0f0">GET</code> <code>http://localhost:8081/author</code>
 
-### Put Editorial
-<code>http://localhost:8081/editorial/{editorial_id}</code>
 
-### Delete Editorial
-<code>http://localhost:8081/editorial/{editorial_id}</code>
+### Gestión de Categoría
 
+#### Crear Categoría
+<code style="background-color:#f0f0f0">POST</code> <code>http://localhost:8081/category</code>
+
+#### Obtener Categoría
+<code style="background-color:#f0f0f0">GET</code> <code>http://localhost:8081/category/{category_id}</code>
+
+#### Obtener Todas las Categorías
+<code style="background-color:#f0f0f0">GET</code> <code>http://localhost:8081/category</code>
+
+#### Actualizar Categoría
+<code style="background-color:#f0f0f0">PUT</code> <code>http://localhost:8081/category/{category_id}</code>
+
+#### Eliminar Categoría
+<code style="background-color:#f0f0f0">DELETE</code> <code>http://localhost:8081/category/{category_id}</code>
+
+
+### Gestión de Libro
+
+#### Crear Libro
+<code style="background-color:#f0f0f0">POST</code> <code>http://localhost:8081/book</code>
+
+#### Obtener Libro
+<code style="background-color:#f0f0f0">GET</code> <code>http://localhost:8081/book/{book_id}</code>
+
+#### Obtener Todos los Libros
+<code style="background-color:#f0f0f0">GET</code> <code>http://localhost:8081/book</code>
+
+#### Actualizar Libro
+<code style="background-color:#f0f0f0">PUT</code> <code>http://localhost:8081/book/{book_id}</code>
+
+#### Eliminar Libro
+<code style="background-color:#f0f0f0">DELETE</code> <code>http://localhost:8081/book/{book_id}</code>
+
+
+### Gestión de Editorial
+
+#### Crear Editorial
+<code style="background-color:#f0f0f0">POST</code> <code>http://localhost:8081/editorial</code>
+
+#### Obtener Editorial
+<code style="background-color:#f0f0f0">GET</code> <code>http://localhost:8081/editorial/{editorial_id}</code>
+
+#### Obtener Todas las Editoriales
+<code style="background-color:#f0f0f0">GET</code> <code>http://localhost:8081/editorial</code>
+
+#### Actualizar Editorial
+<code style="background-color:#f0f0f0">PUT</code> <code>http://localhost:8081/editorial/{editorial_id}</code>
+
+#### Eliminar Editorial
+<code style="background-color:#f0f0f0">DELETE</code> <code>http://localhost:8081/editorial/{editorial_id}</code>
