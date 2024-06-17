@@ -1,20 +1,11 @@
 package com.procesos.parcial.service;
 
-import com.procesos.parcial.model.Author;
 import com.procesos.parcial.model.Category;
-import com.procesos.parcial.repository.AuthorRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.ZoneId;
-import java.util.Date;
-
-import static org.junit.Assert.*;
 
 public class CategoryServiceOpTest {
 

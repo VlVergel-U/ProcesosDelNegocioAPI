@@ -85,4 +85,6 @@ public class CategoryServiceOp implements CategoryService {
         return response.generateResponse(SuccessMessage.CATEGORIES_FOUND.getMessage(), categories, String.valueOf(HttpStatus.OK));
 
     }
+
+
 }

@@ -1,11 +1,9 @@
 package com.procesos.parcial.service;
 
-import com.procesos.parcial.model.*;
-import com.procesos.parcial.model.enums.Language;
+import com.procesos.parcial.model.Author;
 import com.procesos.parcial.repository.AuthorRepository;
-import com.procesos.parcial.repository.BookRepository;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -14,10 +12,6 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.Assert.*;
 
 public class AuthorServiceOpTest {
 
@@ -26,7 +20,6 @@ public class AuthorServiceOpTest {
 
     @Mock
     private AuthorRepository authorRepository;
-
 
     @BeforeEach
     void setUp() {
@@ -42,26 +35,30 @@ public class AuthorServiceOpTest {
         LocalDate localDate = LocalDate.of(1981, Month.JANUARY, 1);
         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         author.setBirthDate(date);
-
     }
 
     @Test
-    public void createAuthor() {
+    void createAuthor() {
+        // Test implementation
     }
 
     @Test
-    public void updateAuthor() {
+    void updateAuthor() {
+        // Test implementation
     }
 
     @Test
-    public void getAuthorById() {
+    void getAuthorById() {
+        // Test implementation
     }
 
     @Test
-    public void deleteAuthor() {
+    void deleteAuthor() {
+        // Test implementation
     }
 
     @Test
-    public void findAllAuthors() {
+    void findAllAuthors() {
+        // Test implementation
     }
 }
